@@ -1,13 +1,13 @@
 package edu.diyan.scrum.tracker.domain.event;
 
+import edu.diyan.scrum.tracker.domain.model.BacklogItemId;
+import edu.diyan.scrum.tracker.domain.model.BacklogItemType;
 import lombok.Value;
-
-import java.util.UUID;
 
 @Value
 public class BacklogItemCreatedEvt {
-    UUID id;
-    String backlogItemType;
+    BacklogItemId id;
+    BacklogItemType backlogItemType;
     String title;
     String description;
 }

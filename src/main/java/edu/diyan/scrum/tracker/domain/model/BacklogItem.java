@@ -7,9 +7,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.axonframework.commandhandling.CommandHandler;
 import org.axonframework.eventsourcing.EventSourcingHandler;
 import org.axonframework.modelling.command.AggregateIdentifier;
-import org.axonframework.modelling.command.AggregateLifecycle;
 import org.axonframework.spring.stereotype.Aggregate;
 import org.springframework.util.Assert;
+
+import static org.axonframework.modelling.command.AggregateLifecycle.apply;
 
 @Aggregate
 @NoArgsConstructor
@@ -25,19 +26,24 @@ public class BacklogItem {
 
     @CommandHandler
     public BacklogItem(CreateBacklogItemCmd cmd) {
-        Assert.hasLength(cmd.getBacklogItemType(), "BacklogItemType required");
+        Assert.notNull(cmd.getBacklogItemType(), "BacklogItemType required");
         Assert.hasLength(cmd.getTitle(), "Title required");
-        AggregateLifecycle.apply(new BacklogItemCreatedEvt(
+
+        apply(new BacklogItemCreatedEvt(
                 cmd.getId(),
-                cmd.getTitle(),
                 cmd.getBacklogItemType(),
+                cmd.getTitle(),
                 cmd.getDescription()
         ));
     }
 
     @EventSourcingHandler
     public void on(BacklogItemCreatedEvt evt) {
-        this.backlogItemId = new BacklogItemId(evt.getId());
+        this.backlogItemId = evt.getId();
+        this.backlogItemType = evt.getBacklogItemType();
+        this.description = evt.getDescription();
+        this.title = evt.getTitle();
+
     }
 
     public void commitToSprint(Sprint sprint) {

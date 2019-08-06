@@ -1,13 +1,15 @@
 package edu.diyan.scrum.tracker.domain.command;
 
+import edu.diyan.scrum.tracker.domain.model.BacklogItemId;
+import edu.diyan.scrum.tracker.domain.model.BacklogItemType;
 import lombok.Value;
-
-import java.util.UUID;
+import org.axonframework.modelling.command.TargetAggregateIdentifier;
 
 @Value
 public class CreateBacklogItemCmd {
-    UUID id;
-    String backlogItemType;
+    @TargetAggregateIdentifier
+    BacklogItemId id;
+    BacklogItemType backlogItemType;
     String title;
     String description;
 }
