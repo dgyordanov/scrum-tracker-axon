@@ -1,4 +1,5 @@
 spring:
   application.name: scrum-tracker
+  h2.console.enabled: true
 
 logging.level.edu.diyan: DEBUG
