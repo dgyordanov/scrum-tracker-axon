@@ -16,6 +16,7 @@
 
     <properties>
         <java.version>11</java.version>
+        <axon.version>4.1</axon.version>
     </properties>
 
     <dependencies>
@@ -45,7 +46,7 @@
                     <artifactId>axon-server-connector</artifactId>
                 </exclusion>
             </exclusions>
-            <version>4.1</version>
+            <version>${axon.version}</version>
         </dependency>
 
         <dependency>
@@ -64,6 +65,13 @@
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
             <version>1.4.199</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.axonframework</groupId>
+            <artifactId>axon-test</artifactId>
+            <scope>test</scope>
+            <version>${axon.version}</version>
         </dependency>
 
     </dependencies>
