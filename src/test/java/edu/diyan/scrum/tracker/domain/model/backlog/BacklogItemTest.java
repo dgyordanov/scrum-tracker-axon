@@ -7,6 +7,8 @@ import org.axonframework.test.aggregate.FixtureConfiguration;
 import org.junit.Before;
 import org.junit.Test;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 public class BacklogItemTest {
 
     private FixtureConfiguration<BacklogItem> fixture;
@@ -18,7 +20,7 @@ public class BacklogItemTest {
 
     @Test
     public void test_CreateBacklogItemCmd_emits_BacklogItemCreatedEvt() {
-        CreateBacklogItemCmd createBacklogItemCmd = new CreateBacklogItemCmd(
+        final CreateBacklogItemCmd createBacklogItemCmd = new CreateBacklogItemCmd(
                 new BacklogItemId(),
                 BacklogItemType.SPIKE,
                 "Event sourcing research",
@@ -33,7 +35,15 @@ public class BacklogItemTest {
                         createBacklogItemCmd.getBacklogItemType(),
                         createBacklogItemCmd.getTitle(),
                         createBacklogItemCmd.getDescription()
-                ));
+                ))
+                .expectState(newBacklogItem -> {
+                    assertThat(newBacklogItem.getBacklogItemId()).isEqualTo(createBacklogItemCmd.getId());
+                    assertThat(newBacklogItem.getTitle()).isEqualTo(createBacklogItemCmd.getTitle());
+                    assertThat(newBacklogItem.getDescription()).isEqualTo(createBacklogItemCmd.getDescription());
+                    assertThat(newBacklogItem.getBacklogItemType()).isEqualTo(createBacklogItemCmd.getBacklogItemType());
+                    assertThat(newBacklogItem.getTasks()).isEmpty();
+                    assertThat(newBacklogItem.getSprintId()).isNull();
+                });
     }
 
     @Test
