@@ -1,4 +1,4 @@
-package edu.diyan.scrum.tracker.domain.model;
+package edu.diyan.scrum.tracker.domain.model.sprint;
 
 import lombok.Value;
 

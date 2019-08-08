@@ -1,7 +1,7 @@
 package edu.diyan.scrum.tracker.domain.command;
 
-import edu.diyan.scrum.tracker.domain.model.BacklogItemId;
-import edu.diyan.scrum.tracker.domain.model.BacklogItemType;
+import edu.diyan.scrum.tracker.domain.model.backlog.BacklogItemId;
+import edu.diyan.scrum.tracker.domain.model.backlog.BacklogItemType;
 import lombok.Value;
 import org.axonframework.modelling.command.TargetAggregateIdentifier;
 

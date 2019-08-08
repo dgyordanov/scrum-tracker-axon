@@ -1,7 +1,7 @@
 package edu.diyan.scrum.tracker.domain.event;
 
-import edu.diyan.scrum.tracker.domain.model.BacklogItemId;
-import edu.diyan.scrum.tracker.domain.model.BacklogItemType;
+import edu.diyan.scrum.tracker.domain.model.backlog.BacklogItemId;
+import edu.diyan.scrum.tracker.domain.model.backlog.BacklogItemType;
 import lombok.Value;
 
 @Value
