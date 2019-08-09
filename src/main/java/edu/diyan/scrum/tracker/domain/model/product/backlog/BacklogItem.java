@@ -1,11 +1,11 @@
-package edu.diyan.scrum.tracker.domain.model.backlog;
+package edu.diyan.scrum.tracker.domain.model.product.backlog;
 
 import edu.diyan.scrum.tracker.domain.command.AddNewTaskCmd;
 import edu.diyan.scrum.tracker.domain.command.CreateBacklogItemCmd;
 import edu.diyan.scrum.tracker.domain.event.BacklogItemCreatedEvt;
 import edu.diyan.scrum.tracker.domain.event.NewTaskAddedToBacklogItemEvt;
-import edu.diyan.scrum.tracker.domain.model.sprint.Sprint;
-import edu.diyan.scrum.tracker.domain.model.sprint.SprintId;
+import edu.diyan.scrum.tracker.domain.model.product.sprint.Sprint;
+import edu.diyan.scrum.tracker.domain.model.product.sprint.SprintId;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

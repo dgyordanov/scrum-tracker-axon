@@ -1,4 +1,4 @@
-package edu.diyan.scrum.tracker.domain.model.backlog;
+package edu.diyan.scrum.tracker.domain.model.product.backlog;
 
 import lombok.Getter;
 import org.axonframework.modelling.command.EntityId;

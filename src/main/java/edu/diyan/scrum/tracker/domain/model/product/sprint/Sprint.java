@@ -1,4 +1,4 @@
-package edu.diyan.scrum.tracker.domain.model.sprint;
+package edu.diyan.scrum.tracker.domain.model.product.sprint;
 
 import java.util.Date;
 

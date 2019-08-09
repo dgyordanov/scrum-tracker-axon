@@ -1,4 +1,4 @@
-package edu.diyan.scrum.tracker.domain.model.backlog;
+package edu.diyan.scrum.tracker.domain.model.product.backlog;
 
 import lombok.AllArgsConstructor;
 import lombok.Value;
@@ -7,11 +7,10 @@ import java.util.UUID;
 
 @Value
 @AllArgsConstructor
-public class TaskId {
-
+public class BacklogItemId {
     UUID id;
 
-    public TaskId() {
+    public BacklogItemId() {
         id = UUID.randomUUID();
     }
 

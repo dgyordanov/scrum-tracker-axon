@@ -1,4 +1,4 @@
-package edu.diyan.scrum.tracker.domain.model.backlog;
+package edu.diyan.scrum.tracker.domain.model.product.backlog;
 
 import edu.diyan.scrum.tracker.domain.command.CreateBacklogItemCmd;
 import edu.diyan.scrum.tracker.domain.event.BacklogItemCreatedEvt;
