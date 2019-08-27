@@ -1,6 +1,5 @@
 package edu.diyan.scrum.tracker.domain.model.product.backlog;
 
-import edu.diyan.scrum.tracker.domain.command.AddNewTaskCmd;
 import edu.diyan.scrum.tracker.domain.event.BacklogItemCreatedEvt;
 import edu.diyan.scrum.tracker.domain.event.NewTaskAddedToBacklogItemEvt;
 import org.axonframework.test.aggregate.AggregateTestFixture;
@@ -74,14 +73,9 @@ public class BacklogItemTest {
     public void test_AddNewTaskCmd_emits_NewTaskAddedToBacklogItemEvt() {
         BacklogItemId backlogItemId = new BacklogItemId();
 
-        var addNewTaskCmd = new AddNewTaskCmd(
-                new TaskId(),
-                backlogItemId,
-                "Task name",
-                "Description",
-                16,
-                16
-        );
+        var addNewTaskCmd = new AddNewTaskCmdFixture()
+                .withBacklogItemId(backlogItemId)
+                .build();
 
         fixture.given(new BacklogItemCreatedEvtFixture().withId(backlogItemId).build())
                 .when(addNewTaskCmd)
@@ -98,14 +92,9 @@ public class BacklogItemTest {
 
     @Test
     public void addNewTaskCmdNoBacklogItemIdThrowsException() {
-        var addNewTaskCmd = new AddNewTaskCmd(
-                new TaskId(),
-                null,
-                "Task name",
-                "Description",
-                16,
-                16
-        );
+        var addNewTaskCmd = new AddNewTaskCmdFixture()
+                .withBacklogItemId(null)
+                .build();
 
         fixture.given()
                 .when(addNewTaskCmd)
@@ -116,14 +105,10 @@ public class BacklogItemTest {
     public void addNewTaskCmdNoTaskIdThrowsException() {
         var backlogItemId = new BacklogItemId();
 
-        var addNewTaskCmd = new AddNewTaskCmd(
-                null,
-                backlogItemId,
-                "Task name",
-                "Description",
-                16,
-                16
-        );
+        var addNewTaskCmd = new AddNewTaskCmdFixture()
+                .withTaskId(null)
+                .withBacklogItemId(backlogItemId)
+                .build();
 
         fixture.given(new BacklogItemCreatedEvtFixture().withId(backlogItemId).build())
                 .when(addNewTaskCmd)
