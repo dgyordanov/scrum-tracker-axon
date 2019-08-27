@@ -6,6 +6,7 @@ import edu.diyan.scrum.tracker.domain.event.BacklogItemCreatedEvt;
 import edu.diyan.scrum.tracker.domain.event.NewTaskAddedToBacklogItemEvt;
 import edu.diyan.scrum.tracker.domain.model.product.sprint.Sprint;
 import edu.diyan.scrum.tracker.domain.model.product.sprint.SprintId;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -25,6 +26,7 @@ import static org.axonframework.modelling.command.AggregateLifecycle.apply;
 @NoArgsConstructor
 @Getter
 @Slf4j
+@EqualsAndHashCode
 public class BacklogItem {
 
     @AggregateIdentifier
@@ -34,7 +36,7 @@ public class BacklogItem {
     private String description;
     private SprintId sprintId;
     @AggregateMember
-    private List<Task> tasks = new ArrayList<>();
+    private List<Task> tasks;
 
     @CommandHandler
     public BacklogItem(CreateBacklogItemCmd cmd) {
@@ -50,10 +52,10 @@ public class BacklogItem {
     }
 
     @CommandHandler
-    public void handle(AddNewTaskCmd cmd) {
+    public void on(AddNewTaskCmd cmd) {
+        Assert.notNull(cmd.getTaskId(), "TaskId required");
         Assert.hasLength(cmd.getName(), "Task name should not be empty");
         Assert.hasLength(cmd.getDescription(), "Task description should not be empty");
-        Assert.notNull(cmd.getTaskId(), "TaskId required");
 
         apply(new NewTaskAddedToBacklogItemEvt(
                 cmd.getTaskId(),
@@ -71,6 +73,7 @@ public class BacklogItem {
         this.backlogItemType = evt.getBacklogItemType();
         this.description = evt.getDescription();
         this.title = evt.getTitle();
+        this.tasks = new ArrayList<>();
     }
 
     @EventSourcingHandler

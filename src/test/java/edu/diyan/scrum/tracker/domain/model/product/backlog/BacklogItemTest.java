@@ -1,7 +1,9 @@
 package edu.diyan.scrum.tracker.domain.model.product.backlog;
 
+import edu.diyan.scrum.tracker.domain.command.AddNewTaskCmd;
 import edu.diyan.scrum.tracker.domain.command.CreateBacklogItemCmd;
 import edu.diyan.scrum.tracker.domain.event.BacklogItemCreatedEvt;
+import edu.diyan.scrum.tracker.domain.event.NewTaskAddedToBacklogItemEvt;
 import org.axonframework.test.aggregate.AggregateTestFixture;
 import org.axonframework.test.aggregate.FixtureConfiguration;
 import org.junit.Before;
@@ -20,7 +22,8 @@ public class BacklogItemTest {
 
     @Test
     public void test_CreateBacklogItemCmd_emits_BacklogItemCreatedEvt() {
-        final CreateBacklogItemCmd createBacklogItemCmd = new CreateBacklogItemCmd(
+        // TODO: add CreateBacklogItemCmd and BacklogItemCreatedEvt Fixtures
+        var createBacklogItemCmd = new CreateBacklogItemCmd(
                 new BacklogItemId(),
                 BacklogItemType.SPIKE,
                 "Event sourcing research",
@@ -72,10 +75,10 @@ public class BacklogItemTest {
 
     @Test
     public void testBacklogItemCreatedEvtConsumption() {
-        BacklogItem backlogItem = new BacklogItem();
-        BacklogItemId backlogItemId = new BacklogItemId();
-        String title = "Event sourcing research";
-        String description = "Experiment with axon framework";
+        var backlogItem = new BacklogItem();
+        var backlogItemId = new BacklogItemId();
+        var title = "Event sourcing research";
+        var description = "Experiment with axon framework";
         backlogItem.on(new BacklogItemCreatedEvt(
                 backlogItemId,
                 BacklogItemType.BUG,
@@ -89,5 +92,40 @@ public class BacklogItemTest {
         assertThat(backlogItem.getDescription()).isEqualTo(description);
         assertThat(backlogItem.getTasks()).isEmpty();
     }
+
+    @Test
+    public void test_AddNewTaskCmd_emits_NewTaskAddedToBacklogItemEvt() {
+        BacklogItemId backlogItemId = new BacklogItemId();
+
+        var addNewTaskCmd = new AddNewTaskCmd(
+                new TaskId(),
+                backlogItemId,
+                "Task name",
+                "Description",
+                16,
+                16
+        );
+
+        var backlogItemCreatedEvt = new BacklogItemCreatedEvt(
+                backlogItemId,
+                BacklogItemType.BUG,
+                "title",
+                "description"
+        );
+
+        fixture.given(backlogItemCreatedEvt)
+                .when(addNewTaskCmd)
+                .expectEvents(new NewTaskAddedToBacklogItemEvt(
+                                addNewTaskCmd.getTaskId(),
+                                addNewTaskCmd.getBacklogItemId(),
+                                addNewTaskCmd.getName(),
+                                addNewTaskCmd.getDescription(),
+                                addNewTaskCmd.getHoursRemaining(),
+                                addNewTaskCmd.getEstimatedHours()
+                        )
+                );
+    }
+
+    // TODO: finish the AddNewTask tests
 
 }

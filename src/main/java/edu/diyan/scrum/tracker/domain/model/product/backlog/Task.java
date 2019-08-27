@@ -1,9 +1,11 @@
 package edu.diyan.scrum.tracker.domain.model.product.backlog;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import org.axonframework.modelling.command.EntityId;
 
 @Getter
+@EqualsAndHashCode
 public class Task {
 
     @EntityId
