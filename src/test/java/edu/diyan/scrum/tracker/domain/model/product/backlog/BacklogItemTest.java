@@ -1,7 +1,6 @@
 package edu.diyan.scrum.tracker.domain.model.product.backlog;
 
 import edu.diyan.scrum.tracker.domain.command.AddNewTaskCmd;
-import edu.diyan.scrum.tracker.domain.command.CreateBacklogItemCmd;
 import edu.diyan.scrum.tracker.domain.event.BacklogItemCreatedEvt;
 import edu.diyan.scrum.tracker.domain.event.NewTaskAddedToBacklogItemEvt;
 import org.axonframework.test.aggregate.AggregateTestFixture;
@@ -22,13 +21,7 @@ public class BacklogItemTest {
 
     @Test
     public void test_CreateBacklogItemCmd_emits_BacklogItemCreatedEvt() {
-        // TODO: add CreateBacklogItemCmd and BacklogItemCreatedEvt Fixtures
-        var createBacklogItemCmd = new CreateBacklogItemCmd(
-                new BacklogItemId(),
-                BacklogItemType.SPIKE,
-                "Event sourcing research",
-                "Experiment with axon framework"
-        );
+        var createBacklogItemCmd = new CreateBacklogItemCmdFixture().build();
 
         fixture.given()
                 .when(createBacklogItemCmd)
@@ -52,44 +45,28 @@ public class BacklogItemTest {
     @Test
     public void testCreateBacklogItemCmdWithoutTitleThrowException() {
         fixture.given()
-                .when(new CreateBacklogItemCmd(
-                        new BacklogItemId(),
-                        BacklogItemType.SPIKE,
-                        "",
-                        "Experiment with axon framework"
-                ))
+                .when(new CreateBacklogItemCmdFixture().withTitle(null).build())
                 .expectException(IllegalArgumentException.class);
     }
 
     @Test
     public void testCreateBacklogItemCmdWithoutBacklogItemTypeThrowException() {
         fixture.given()
-                .when(new CreateBacklogItemCmd(
-                        new BacklogItemId(),
-                        null,
-                        "Title",
-                        "Experiment with axon framework"
-                ))
+                .when(new CreateBacklogItemCmdFixture().withBacklogItemType(null).build())
                 .expectException(IllegalArgumentException.class);
     }
 
     @Test
     public void testBacklogItemCreatedEvtConsumption() {
         var backlogItem = new BacklogItem();
-        var backlogItemId = new BacklogItemId();
-        var title = "Event sourcing research";
-        var description = "Experiment with axon framework";
-        backlogItem.on(new BacklogItemCreatedEvt(
-                backlogItemId,
-                BacklogItemType.BUG,
-                title,
-                description
-        ));
+        var backlogItemCreatedEvt = new BacklogItemCreatedEvtFixture().build();
 
-        assertThat(backlogItem.getBacklogItemId()).isEqualTo(backlogItemId);
-        assertThat(backlogItem.getBacklogItemType()).isEqualTo(BacklogItemType.BUG);
-        assertThat(backlogItem.getTitle()).isEqualTo(title);
-        assertThat(backlogItem.getDescription()).isEqualTo(description);
+        backlogItem.on(backlogItemCreatedEvt);
+
+        assertThat(backlogItem.getBacklogItemId()).isEqualTo(backlogItemCreatedEvt.getId());
+        assertThat(backlogItem.getBacklogItemType()).isEqualTo(backlogItemCreatedEvt.getBacklogItemType());
+        assertThat(backlogItem.getTitle()).isEqualTo(backlogItemCreatedEvt.getTitle());
+        assertThat(backlogItem.getDescription()).isEqualTo(backlogItemCreatedEvt.getDescription());
         assertThat(backlogItem.getTasks()).isEmpty();
     }
 
@@ -106,14 +83,7 @@ public class BacklogItemTest {
                 16
         );
 
-        var backlogItemCreatedEvt = new BacklogItemCreatedEvt(
-                backlogItemId,
-                BacklogItemType.BUG,
-                "title",
-                "description"
-        );
-
-        fixture.given(backlogItemCreatedEvt)
+        fixture.given(new BacklogItemCreatedEvtFixture().withId(backlogItemId).build())
                 .when(addNewTaskCmd)
                 .expectEvents(new NewTaskAddedToBacklogItemEvt(
                                 addNewTaskCmd.getTaskId(),
@@ -124,6 +94,40 @@ public class BacklogItemTest {
                                 addNewTaskCmd.getEstimatedHours()
                         )
                 );
+    }
+
+    @Test
+    public void addNewTaskCmdNoBacklogItemIdThrowsException() {
+        var addNewTaskCmd = new AddNewTaskCmd(
+                new TaskId(),
+                null,
+                "Task name",
+                "Description",
+                16,
+                16
+        );
+
+        fixture.given()
+                .when(addNewTaskCmd)
+                .expectException(IllegalArgumentException.class);
+    }
+
+    @Test
+    public void addNewTaskCmdNoTaskIdThrowsException() {
+        var backlogItemId = new BacklogItemId();
+
+        var addNewTaskCmd = new AddNewTaskCmd(
+                null,
+                backlogItemId,
+                "Task name",
+                "Description",
+                16,
+                16
+        );
+
+        fixture.given(new BacklogItemCreatedEvtFixture().withId(backlogItemId).build())
+                .when(addNewTaskCmd)
+                .expectException(IllegalArgumentException.class);
     }
 
     // TODO: finish the AddNewTask tests
