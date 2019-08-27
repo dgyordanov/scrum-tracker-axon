@@ -58,4 +58,36 @@ public class BacklogItemTest {
                 .expectException(IllegalArgumentException.class);
     }
 
+    @Test
+    public void testCreateBacklogItemCmdWithoutBacklogItemTypeThrowException() {
+        fixture.given()
+                .when(new CreateBacklogItemCmd(
+                        new BacklogItemId(),
+                        null,
+                        "Title",
+                        "Experiment with axon framework"
+                ))
+                .expectException(IllegalArgumentException.class);
+    }
+
+    @Test
+    public void testBacklogItemCreatedEvtConsumption() {
+        BacklogItem backlogItem = new BacklogItem();
+        BacklogItemId backlogItemId = new BacklogItemId();
+        String title = "Event sourcing research";
+        String description = "Experiment with axon framework";
+        backlogItem.on(new BacklogItemCreatedEvt(
+                backlogItemId,
+                BacklogItemType.BUG,
+                title,
+                description
+        ));
+
+        assertThat(backlogItem.getBacklogItemId()).isEqualTo(backlogItemId);
+        assertThat(backlogItem.getBacklogItemType()).isEqualTo(BacklogItemType.BUG);
+        assertThat(backlogItem.getTitle()).isEqualTo(title);
+        assertThat(backlogItem.getDescription()).isEqualTo(description);
+        assertThat(backlogItem.getTasks()).isEmpty();
+    }
+
 }
