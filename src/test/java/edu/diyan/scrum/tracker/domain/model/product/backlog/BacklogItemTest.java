@@ -115,6 +115,58 @@ public class BacklogItemTest {
                 .expectException(IllegalArgumentException.class);
     }
 
-    // TODO: finish the AddNewTask tests
+    @Test
+    public void addNewTaskCmdNoNameThrowsException() {
+        var addNewTaskCmd = new AddNewTaskCmdFixture()
+                .withName("")
+                .build();
+
+        fixture.given(new BacklogItemCreatedEvtFixture().withId(addNewTaskCmd.getBacklogItemId()).build())
+                .when(addNewTaskCmd)
+                .expectException(IllegalArgumentException.class);
+    }
+
+    @Test
+    public void addNewTaskCmdNegativeEstimatedHoursThrowsException() {
+        var addNewTaskCmd = new AddNewTaskCmdFixture()
+                .withEstimatedHours(-1)
+                .build();
+
+        fixture.given(new BacklogItemCreatedEvtFixture().withId(addNewTaskCmd.getBacklogItemId()).build())
+                .when(addNewTaskCmd)
+                .expectException(IllegalArgumentException.class);
+    }
+
+    @Test
+    public void addNewTaskCmdNegativeHoursRemainingThrowsException() {
+        var addNewTaskCmd = new AddNewTaskCmdFixture()
+                .withHoursRemaining(-1)
+                .build();
+
+        fixture.given(new BacklogItemCreatedEvtFixture().withId(addNewTaskCmd.getBacklogItemId()).build())
+                .when(addNewTaskCmd)
+                .expectException(IllegalArgumentException.class);
+    }
+
+    @Test
+    public void testNewTaskAddedToBacklogItemEvtConsumption() {
+        var backlogItem = new BacklogItem();
+        var backlogItemCreatedEvt = new BacklogItemCreatedEvtFixture().build();
+        backlogItem.on(backlogItemCreatedEvt);
+
+        NewTaskAddedToBacklogItemEvt newTaskAddedToBacklogItemEvt = new NewTaskAddedToBacklogItemEvtFixture()
+                .withBacklogItemId(backlogItem.getBacklogItemId())
+                .build();
+
+        backlogItem.on(newTaskAddedToBacklogItemEvt);
+
+        assertThat(backlogItem.getTasks()).hasSize(1);
+        assertThat(backlogItem.getTasks().get(0).getTaskId()).isEqualTo(newTaskAddedToBacklogItemEvt.getTaskId());
+        assertThat(backlogItem.getTasks().get(0).getName()).isEqualTo(newTaskAddedToBacklogItemEvt.getName());
+        assertThat(backlogItem.getTasks().get(0).getDescription()).isEqualTo(newTaskAddedToBacklogItemEvt.getDescription());
+        assertThat(backlogItem.getTasks().get(0).getEstimatedHours()).isEqualTo(newTaskAddedToBacklogItemEvt.getEstimatedHours());
+        assertThat(backlogItem.getTasks().get(0).getHoursRemaining()).isEqualTo(newTaskAddedToBacklogItemEvt.getHoursRemaining());
+        assertThat(backlogItem.getTasks().get(0).getStatus()).isEqualTo(TaskStatus.NOT_STARTED);
+    }
 
 }

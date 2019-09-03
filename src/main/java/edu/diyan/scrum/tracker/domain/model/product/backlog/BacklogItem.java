@@ -36,7 +36,7 @@ public class BacklogItem {
     private String description;
     private SprintId sprintId;
     @AggregateMember
-    private List<Task> tasks;
+    private List<Task> tasks = new ArrayList<>();
 
     @CommandHandler
     public BacklogItem(CreateBacklogItemCmd cmd) {
@@ -54,8 +54,10 @@ public class BacklogItem {
     @CommandHandler
     public void on(AddNewTaskCmd cmd) {
         Assert.notNull(cmd.getTaskId(), "TaskId required");
+        Assert.notNull(cmd.getBacklogItemId(), "TaskId required");
         Assert.hasLength(cmd.getName(), "Task name should not be empty");
-        Assert.hasLength(cmd.getDescription(), "Task description should not be empty");
+        Assert.isTrue(cmd.getHoursRemaining() >= 0, "Remaining hours should not be negative");
+        Assert.isTrue(cmd.getEstimatedHours() >= 0, "Estimated hours should not be negative");
 
         apply(new NewTaskAddedToBacklogItemEvt(
                 cmd.getTaskId(),
