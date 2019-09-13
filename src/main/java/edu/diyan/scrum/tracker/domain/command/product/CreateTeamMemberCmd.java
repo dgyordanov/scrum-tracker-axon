@@ -1,4 +1,4 @@
-package edu.diyan.scrum.tracker.domain.event;
+package edu.diyan.scrum.tracker.domain.command.product;
 
 import edu.diyan.scrum.tracker.domain.Email;
 import edu.diyan.scrum.tracker.domain.model.team.TeamId;
@@ -6,11 +6,11 @@ import edu.diyan.scrum.tracker.domain.model.team.TeamMemberId;
 import lombok.Value;
 
 @Value
-public class TeamMemberCreatedEvt {
+public class CreateTeamMemberCmd {
     TeamMemberId teamMemberId;
-    String username;
-    Email email;
     TeamId teamId;
+    String username;
     String firstName;
     String lastName;
+    Email email;
 }

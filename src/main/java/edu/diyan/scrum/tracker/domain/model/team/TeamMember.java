@@ -1,8 +1,8 @@
 package edu.diyan.scrum.tracker.domain.model.team;
 
 import edu.diyan.scrum.tracker.domain.Email;
-import edu.diyan.scrum.tracker.domain.command.CreateTeamMemberCmd;
-import edu.diyan.scrum.tracker.domain.event.TeamMemberCreatedEvt;
+import edu.diyan.scrum.tracker.domain.command.product.CreateTeamMemberCmd;
+import edu.diyan.scrum.tracker.domain.event.product.TeamMemberCreatedEvt;
 import org.axonframework.commandhandling.CommandHandler;
 import org.axonframework.eventsourcing.EventSourcingHandler;
 import org.axonframework.modelling.command.AggregateIdentifier;

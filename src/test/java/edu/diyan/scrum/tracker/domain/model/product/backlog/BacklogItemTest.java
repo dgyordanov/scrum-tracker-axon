@@ -1,7 +1,7 @@
 package edu.diyan.scrum.tracker.domain.model.product.backlog;
 
-import edu.diyan.scrum.tracker.domain.event.BacklogItemCreatedEvt;
-import edu.diyan.scrum.tracker.domain.event.NewTaskAddedToBacklogItemEvt;
+import edu.diyan.scrum.tracker.domain.event.product.BacklogItemCreatedEvt;
+import edu.diyan.scrum.tracker.domain.event.product.NewTaskAddedToBacklogItemEvt;
 import org.axonframework.test.aggregate.AggregateTestFixture;
 import org.axonframework.test.aggregate.FixtureConfiguration;
 import org.junit.Before;

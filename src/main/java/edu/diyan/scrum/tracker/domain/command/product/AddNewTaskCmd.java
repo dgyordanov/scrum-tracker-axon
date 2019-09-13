@@ -1,4 +1,4 @@
-package edu.diyan.scrum.tracker.domain.command;
+package edu.diyan.scrum.tracker.domain.command.product;
 
 import edu.diyan.scrum.tracker.domain.model.product.backlog.BacklogItemId;
 import edu.diyan.scrum.tracker.domain.model.product.backlog.TaskId;

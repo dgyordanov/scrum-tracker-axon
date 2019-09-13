@@ -1,9 +1,9 @@
 package edu.diyan.scrum.tracker.domain.model.product.backlog;
 
-import edu.diyan.scrum.tracker.domain.command.AddNewTaskCmd;
-import edu.diyan.scrum.tracker.domain.command.CreateBacklogItemCmd;
-import edu.diyan.scrum.tracker.domain.event.BacklogItemCreatedEvt;
-import edu.diyan.scrum.tracker.domain.event.NewTaskAddedToBacklogItemEvt;
+import edu.diyan.scrum.tracker.domain.command.product.AddNewTaskCmd;
+import edu.diyan.scrum.tracker.domain.command.product.CreateBacklogItemCmd;
+import edu.diyan.scrum.tracker.domain.event.product.BacklogItemCreatedEvt;
+import edu.diyan.scrum.tracker.domain.event.product.NewTaskAddedToBacklogItemEvt;
 import edu.diyan.scrum.tracker.domain.model.product.sprint.Sprint;
 import edu.diyan.scrum.tracker.domain.model.product.sprint.SprintId;
 import lombok.EqualsAndHashCode;

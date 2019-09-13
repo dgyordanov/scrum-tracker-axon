@@ -1,6 +1,6 @@
 package edu.diyan.scrum.tracker.domain.model.product.backlog;
 
-import edu.diyan.scrum.tracker.domain.command.AddNewTaskCmd;
+import edu.diyan.scrum.tracker.domain.command.product.AddNewTaskCmd;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Wither;

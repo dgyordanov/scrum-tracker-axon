@@ -1,6 +1,6 @@
 package edu.diyan.scrum.tracker.domain.model.product.backlog;
 
-import edu.diyan.scrum.tracker.domain.event.BacklogItemCreatedEvt;
+import edu.diyan.scrum.tracker.domain.event.product.BacklogItemCreatedEvt;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Wither;

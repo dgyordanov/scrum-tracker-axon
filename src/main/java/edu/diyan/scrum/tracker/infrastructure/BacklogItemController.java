@@ -1,6 +1,6 @@
 package edu.diyan.scrum.tracker.infrastructure;
 
-import edu.diyan.scrum.tracker.domain.command.CreateBacklogItemCmd;
+import edu.diyan.scrum.tracker.domain.command.product.CreateBacklogItemCmd;
 import edu.diyan.scrum.tracker.domain.model.product.backlog.BacklogItemId;
 import edu.diyan.scrum.tracker.domain.model.product.backlog.BacklogItemType;
 import lombok.RequiredArgsConstructor;
