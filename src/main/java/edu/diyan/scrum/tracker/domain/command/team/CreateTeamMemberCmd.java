@@ -1,4 +1,4 @@
-package edu.diyan.scrum.tracker.domain.command.product;
+package edu.diyan.scrum.tracker.domain.command.team;
 
 import edu.diyan.scrum.tracker.domain.Email;
 import edu.diyan.scrum.tracker.domain.model.team.TeamId;

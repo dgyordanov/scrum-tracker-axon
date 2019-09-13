@@ -9,7 +9,7 @@ public class Email {
     private String email;
 
     public Email(String email) {
-        Assert.isTrue(EmailValidator.getInstance().isValid(email), String.format("Invalid email: %s"));
+        Assert.isTrue(EmailValidator.getInstance().isValid(email), String.format("Invalid email: %s", email));
         this.email = email;
     }
 

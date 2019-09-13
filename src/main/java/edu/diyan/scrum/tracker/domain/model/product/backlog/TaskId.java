@@ -6,7 +6,6 @@ import lombok.Value;
 import java.util.UUID;
 
 @Value
-@AllArgsConstructor
 public class TaskId {
 
     UUID id;
