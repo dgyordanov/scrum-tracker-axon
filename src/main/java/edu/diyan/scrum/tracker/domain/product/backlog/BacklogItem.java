@@ -30,7 +30,14 @@ public class BacklogItem {
     private BacklogItemType backlogItemType;
     private String title;
     private String description;
+    // TODO: implement commit to sprint
     private SprintId sprintId;
+    // TODO: STATUS
+    private BacklogItemStatus backlogItemStatus;
+
+    /* Task entity is part of the aggregate, because the state of the BacklogItem depends on the state of all the Tasks
+     created for the it. For example BacklogItem is considered done only if all the tasks are done(remaining hours are 0).
+     It is a business transaction boundary and consistency is important. */
     @AggregateMember
     private List<Task> tasks = new ArrayList<>();
 

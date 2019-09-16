@@ -9,5 +9,6 @@ public class Sprint {
     private Date ends;
     private String name;
     private String goal;
+    // TODO: add CommittedBacklogItems with order in the sprint
 
 }
