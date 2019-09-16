@@ -95,7 +95,7 @@ public class BacklogItem {
     }
 
     public void commitToSprint(Sprint sprint) {
-
+        // TODO: emit event that will create a CommittedBacklogItem in the Sprint with a position in its order
     }
 
     public void uncommitFromSprint() {
