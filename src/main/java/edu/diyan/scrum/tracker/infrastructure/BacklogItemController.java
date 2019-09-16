@@ -1,8 +1,8 @@
 package edu.diyan.scrum.tracker.infrastructure;
 
-import edu.diyan.scrum.tracker.domain.command.product.CreateBacklogItemCmd;
-import edu.diyan.scrum.tracker.domain.model.product.backlog.BacklogItemId;
-import edu.diyan.scrum.tracker.domain.model.product.backlog.BacklogItemType;
+import edu.diyan.scrum.tracker.domain.product.backlog.CreateBacklogItemCmd;
+import edu.diyan.scrum.tracker.domain.product.backlog.BacklogItemId;
+import edu.diyan.scrum.tracker.domain.product.backlog.BacklogItemType;
 import lombok.RequiredArgsConstructor;
 import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.springframework.http.ResponseEntity;
