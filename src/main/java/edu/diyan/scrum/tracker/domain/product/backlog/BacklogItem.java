@@ -72,6 +72,15 @@ public class BacklogItem {
         ));
     }
 
+    @CommandHandler
+    public void on(CommitBacklogItemToSpringCmd cmd) {
+        Assert.notNull(cmd.getSprintId(), "SprintId required");
+        apply(new BacklogItemCommittedEvt(
+                cmd.getBacklogItemId(),
+                cmd.getSprintId()
+        ));
+    }
+
     @EventSourcingHandler
     public void on(BacklogItemCreatedEvt evt) {
         this.backlogItemId = evt.getId();
@@ -92,22 +101,6 @@ public class BacklogItem {
                 TaskStatus.NOT_STARTED
         );
         this.getTasks().add(newTask);
-    }
-
-    public void commitToSprint(Sprint sprint) {
-        // TODO: emit event that will create a CommittedBacklogItem in the Sprint with a position in its order
-    }
-
-    public void uncommitFromSprint() {
-
-    }
-
-    public void scheduleForSprint(Sprint sprint) {
-
-    }
-
-    public void unscheduleForSprint(Sprint sprint) {
-
     }
 
 }

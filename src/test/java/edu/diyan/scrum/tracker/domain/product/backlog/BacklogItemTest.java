@@ -167,4 +167,39 @@ public class BacklogItemTest {
         assertThat(backlogItem.getTasks().get(0).getStatus()).isEqualTo(TaskStatus.NOT_STARTED);
     }
 
+    @Test
+    public void test_CommitBacklogItemToSpringCmd_emits_BacklogItemCommittedEvt() {
+        var commitBacklogItemToSpringCmd = new CommitBacklogItemToSpringCmdFixture().build();
+
+        fixture.given(new BacklogItemCreatedEvtFixture().withId(commitBacklogItemToSpringCmd.getBacklogItemId()).build())
+                .when(commitBacklogItemToSpringCmd)
+                .expectSuccessfulHandlerExecution()
+                .expectEvents(new BacklogItemCommittedEvt(
+                        commitBacklogItemToSpringCmd.getBacklogItemId(),
+                        commitBacklogItemToSpringCmd.getSprintId()
+                ));
+    }
+
+    @Test
+    public void testCommitBacklogItemToSpringCmdNoSprintIdThrowsException() {
+        var commitBacklogItemToSpringCmd = new CommitBacklogItemToSpringCmdFixture()
+                .withSprintId(null)
+                .build();
+
+        fixture.given(new BacklogItemCreatedEvtFixture().withId(commitBacklogItemToSpringCmd.getBacklogItemId()).build())
+                .when(commitBacklogItemToSpringCmd)
+                .expectException(IllegalArgumentException.class);
+    }
+
+    @Test
+    public void testCommitBacklogItemToSpringCmdNoBacklogItemIdThrowsException() {
+        var commitBacklogItemToSpringCmd = new CommitBacklogItemToSpringCmdFixture()
+                .withBacklogItemId(null)
+                .build();
+
+        fixture.given(new BacklogItemCreatedEvtFixture().withId(commitBacklogItemToSpringCmd.getBacklogItemId()).build())
+                .when(commitBacklogItemToSpringCmd)
+                .expectException(IllegalArgumentException.class);
+    }
+
 }
