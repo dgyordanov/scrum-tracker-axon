@@ -5,7 +5,7 @@ import lombok.Value;
 import org.axonframework.modelling.command.TargetAggregateIdentifier;
 
 @Value
-public class CommitBacklogItemToSpringCmd {
+public class CommitToSpringCmd {
     @TargetAggregateIdentifier
     SprintId sprintId;
     BacklogItemId backlogItemId;
